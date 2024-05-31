@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas Flower Pattern</title>
+    <style>
+        canvas {
+            display: block;
+            margin: 0 auto;
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="flowerCanvas" width="600" height="600"></canvas>
+    <script>
+        function drawFlower(ctx, x, y, petalCount, petalLength, petalWidth) {
+            ctx.save();
+            ctx.translate(x, y);
+
+            for (let i = 0; i < petalCount; i++) {
+                ctx.rotate((Math.PI * 2) / petalCount);
+
+                ctx.beginPath();
+                ctx.moveTo(0, 0);
+                ctx.quadraticCurveTo(petalWidth / 2, -petalLength / 2, 0, -petalLength);
+                ctx.quadraticCurveTo(-petalWidth / 2, -petalLength / 2, 0, 0);
+                ctx.closePath();
+                ctx.fillStyle = 'rgba(255, 105, 180, 0.8)';
+                ctx.fill();
+                ctx.strokeStyle = 'rgba(255, 20, 147, 0.9)';
+                ctx.stroke();
+            }
+
+            ctx.restore();
+        }
+
+        function drawPattern() {
+            const canvas = document.getElementById('flowerCanvas');
+            const ctx = canvas.getContext('2d');
+
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const petalCount = 8;
+            const petalLength = 50;
+            const petalWidth = 20;
+
+            for (let y = 0; y < canvas.height; y += 100) {
+                for (let x = 0; x < canvas.width; x += 100) {
+                    drawFlower(ctx, x, y, petalCount, petalLength, petalWidth);
+                }
+            }
+        }
+
+        window.onload = function() {
+            drawPattern();
+        };
+    </script>
+</body>
+</html>
